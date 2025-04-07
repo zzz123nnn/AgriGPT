@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image as PILImage
 from matplotlib import pyplot as plt
 
-# 初始化模型
+
 args = {
     'model': 'openllama_peft',
     'imagebind_ckpt_path': '../pretrained_ckpt/imagebind_ckpt/imagebind_huge.pth',
@@ -27,14 +27,14 @@ model.load_state_dict(delta_ckpt, strict=False)
 model = model.eval().half().cuda()
 
 
-# **加载训练时保存的聚类中心**
+
 feature_cluster_path = './ckpt/train_supervised/feature_clusters.pth'
 model.feature_cluster.save_path = feature_cluster_path  # 设置正确的 save_path
 model.feature_cluster.load_centroids(device="cuda")  #
 print(f'[INFO] 成功加载测试用聚类中心: {feature_cluster_path}')
 
 def process_image_output(pixel_output, image_path):
-    """处理图像输出并保存"""
+
     plt.imshow(pixel_output.to(torch.float16).reshape(224, 224).detach().cpu(), cmap='binary_r')
     plt.axis('off')
     plt.savefig('output.png', bbox_inches='tight', pad_inches=0)
@@ -64,11 +64,11 @@ def process_image_output(pixel_output, image_path):
     return 'output.png'
 
 def predict(input_text, image_path, history, modality_cache):
-    """处理输入并生成响应"""
+
     if not image_path:
         return "There is no image path provided! Please provide an image path.", None, history, modality_cache
 
-    # 准备输入字典
+
     inputs = {
         'prompt': input_text,
         'image_paths': [image_path],
@@ -82,15 +82,13 @@ def predict(input_text, image_path, history, modality_cache):
         'modality_embeds': modality_cache
     }
 
-    # 生成响应
     response, pixel_output = model.generate(inputs, web_demo=True)
 
-    # 处理图像输出
     output_image_path = None
     if pixel_output is not None:
         output_image_path = process_image_output(pixel_output, image_path)
 
-    # 更新历史
+
     history.append((input_text, response))
     return response, output_image_path, history, modality_cache
 
@@ -103,7 +101,7 @@ def main():
     history = []
     modality_cache = []
 
-    # 获取初始图像路径
+
     image_path = input("Please enter the path to your query image: ").strip()
 
     while True:
@@ -120,12 +118,12 @@ def main():
             print("History cleared!")
             continue
 
-        # 处理输入并获取响应
+
         response, output_image_path, history, modality_cache = predict(
             user_input, image_path, history, modality_cache
         )
 
-        # 打印响应
+
         print("\nResponse:")
         print(response)
 

@@ -1,4 +1,4 @@
-# 1.Running demo:
+# 1.Preparation:
 
 ## 1.1. Environment Installation:
 * Install the required packages:

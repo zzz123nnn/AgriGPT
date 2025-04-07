@@ -7,7 +7,7 @@ pip install -r requirements.txt
 ```
 
 ## 1.2. Prepare ImageBind,Vicuna, and PandaGPT Checkpoint:
-* You can download the pre-trained ImageBind model using [this form](https://drive.google.com/drive/folders/1Rg8uvWHxqzSseNGC68R4J42B9tEqdKR3?usp=drive_link).
+* You can download the pre-trained ImageBind,Vicuna, and PandaGPT model using [this form](https://drive.google.com/drive/folders/1Rg8uvWHxqzSseNGC68R4J42B9tEqdKR3?usp=drive_link).
 
 
 # 2.Train Model:
